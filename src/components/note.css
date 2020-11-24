@@ -1,0 +1,29 @@
+.note {
+   color: white;
+    font-size: 15px;
+    border-radius: 5%;
+    background-color: #10979E;
+    text-align: left;
+    height: 150px;
+    width: 200px;
+    float: left;
+    margin: .5rem;
+    padding-left: 4px;
+}
+
+.note-title{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.note-date{
+    font-size: 11px;
+    padding-top: 30px;
+}
+
+.closebtn {
+    float: right;
+    background-color:#10979E ;
+    border: #10979E;
+    color: lightblue;
+}

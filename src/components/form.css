@@ -1,0 +1,27 @@
+.textarea{
+    margin-top: 0rem;
+}
+
+
+.textarea-wrapper{
+    height: 180px;
+    width: 300px;
+    display: flexbox;
+    justify-content: center;
+    /* border: black 1px solid; */
+    position: relative;
+}
+
+.addbtn{
+    background-color: #2FE1EB;
+    border-radius: 10%;
+
+}
+
+.noteswrapper{
+    width: 900px;
+    /* border: black 1px solid; */
+    position: absolute;
+    left: -280px;
+
+}
