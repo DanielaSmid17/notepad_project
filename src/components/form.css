@@ -25,3 +25,11 @@
     left: -280px;
 
 }
+
+.empty {
+    /* padding-left: -18rem; */
+    margin-top: 2rem;
+    display: inline;
+    position: absolute;
+    left: 354px;
+}

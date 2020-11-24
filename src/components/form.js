@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import Note from "./note.js"
-import './form.css'
-
-export default class Form extends Component {
+import React, { Component } from 'react';
+import Note from "./note.js";
+import './form.css';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
+export default class NoteForm extends Component {
 
     constructor(props) {
         super(props);
@@ -36,6 +37,13 @@ export default class Form extends Component {
         const titlesCopy = [...this.state.title]
         titlesCopy.push(this.state.title);
 
+        const titleInput = document.getElementById('title');
+        titleInput.value = '';
+        const noteInput = document.getElementById('note');
+        noteInput.value = '';
+
+
+
     }
     handleDelete = (index) => {
 
@@ -45,28 +53,36 @@ export default class Form extends Component {
 
     }
 
+
+
     render() {
         return (
             <div className='textarea-wrapper'>
                 <div>
-                    <input
-                        type='textarea'
-                        placeholder='Note title'
-                        onChange={(e) => this.UpdateTitle(e)}
-                    />
+                    <Form>
 
-                    <textarea
-                        rows="5"
-                        cols="30"
-                        className='textarea'
-                        type='textarea'
-                        placeholder='Type note here'
-                        onChange={(e) => this.UpdateInputvalue(e)} />
+                        <Form.Control
+                            type='textarea'
+                            placeholder='Note title'
+                            onChange={(e) => this.UpdateTitle(e)}
+                            id='title'
+                        />
 
-                    <button className='addbtn' onClick={(e) => this.onSubmit(e)}>Add note</button>
+                        <Form.Control
+                            as="textarea" rows={3}
+
+                            cols="30"
+                            className='textarea'
+                            type='textarea'
+                            placeholder='Type note here'
+                            onChange={(e) => this.UpdateInputvalue(e)}
+                            id='note' />
+
+                        <Button variant="dark" onClick={(e) => this.onSubmit(e)}>Add note</Button>
+                    </Form>
                 </div>
                 <div className='noteswrapper'>
-                    {(this.state.notes.length === 0 && <p>Notepad empty</p>)}
+                    {(this.state.notes.length === 0 && <p className='empty'>Notepad empty</p>)}
 
 
 
