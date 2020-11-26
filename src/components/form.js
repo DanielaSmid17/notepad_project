@@ -9,9 +9,11 @@ export default class NoteForm extends Component {
         super(props);
         this.state = {
             InputValue: '',
-            notes: [],
+            InputTitle: '',
             date: '',
-            title: '',
+            notes: [], // [{title: "mytitle", content: "mycontent"}, {title: "mytitl2e2", content: "mycontent2"}]
+            updatedDate: '',
+
         }
 
     }
@@ -19,37 +21,46 @@ export default class NoteForm extends Component {
         const value = e.target.value
         this.setState({ InputValue: value })
         let date = new Date(Date.now());
-        this.setState({ date: date.toLocaleDateString() })
+        this.setState({ date: date.toDateString() })
+        //.toLocaleDateString()
 
 
     }
     UpdateTitle(e) {
+        console.log("update title", e.target);
         const title = e.target.value;
-        this.setState({ title: title });
+        this.setState({ InputTitle: title });
     }
 
     onSubmit(e) {
+        console.log('on submit', e.target);
         e.preventDefault();
         const notesCopy = [...this.state.notes]
         if (this.state.InputValue)
-            notesCopy.push(this.state.InputValue)
+            notesCopy.push({ title: this.state.InputTitle, content: this.state.InputValue, date: this.state.date })
         this.setState({ notes: notesCopy });
-        const titlesCopy = [...this.state.title]
-        titlesCopy.push(this.state.title);
-
-        const titleInput = document.getElementById('title');
-        titleInput.value = '';
-        const noteInput = document.getElementById('note');
-        noteInput.value = '';
-
+        this.setState({ InputValue: '', InputTitle: '' })
 
 
     }
     handleDelete = (index) => {
 
         const deleteCopy = [...this.state.notes]
+        console.log(deleteCopy);
         deleteCopy.splice(index, 1)
+        console.log(deleteCopy);
         this.setState({ notes: deleteCopy })
+
+    }
+
+    handleModalUpdate = (newTitle, newContent, index, date) => {
+        const notesCopy = [...this.state.notes]
+        if (newTitle)
+            notesCopy[index].title = newTitle;
+        if (newContent)
+            notesCopy[index].content = newContent;
+        this.setState({ notes: notesCopy })
+        this.setState({ updatedDate: date })
 
     }
 
@@ -60,12 +71,12 @@ export default class NoteForm extends Component {
             <div className='textarea-wrapper'>
                 <div>
                     <Form>
-
                         <Form.Control
                             type='textarea'
                             placeholder='Note title'
                             onChange={(e) => this.UpdateTitle(e)}
                             id='title'
+                            value={this.state.InputTitle}
                         />
 
                         <Form.Control
@@ -76,19 +87,26 @@ export default class NoteForm extends Component {
                             type='textarea'
                             placeholder='Type note here'
                             onChange={(e) => this.UpdateInputvalue(e)}
-                            id='note' />
+                            id='note'
+                            value={this.state.InputValue}
+                        />
 
                         <Button variant="dark" onClick={(e) => this.onSubmit(e)}>Add note</Button>
                     </Form>
                 </div>
                 <div className='noteswrapper'>
-                    {(this.state.notes.length === 0 && <p className='empty'>Notepad empty</p>)}
-
-
-
+                    {/* {(this.state.notes.length === 0 && <p className='empty'>Notepad empty</p>)} */}
                     {this.state.notes.map((element, index) =>
-                        < Note note={element} date={this.state.date} key={new Date().getTime()} title={this.state.title} onDelete={this.handleDelete} index={index} />
+                        < Note note={element.content}
+                            date={element.date}
+                            key={index}
+                            title={element.title}
+                            onDelete={this.handleDelete}
+                            index={index}
+                            updatedDate={this.state.updatedDate}
+                            onUpdate={this.handleModalUpdate}
 
+                        />
                     )}
                 </div>
 
